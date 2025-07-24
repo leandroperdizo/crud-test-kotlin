@@ -18,7 +18,7 @@ class SqsConfig {
     @Bean
     fun sqsClient(): SqsClient {
         return SqsClient.builder()
-            .endpointOverride(URI.create("http://localhost:4566")) // <= Importante!
+            .endpointOverride(URI.create("http://localhost:4566"))
             .region(Region.US_EAST_1)
             .credentialsProvider(
                 StaticCredentialsProvider.create(
