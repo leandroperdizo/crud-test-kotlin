@@ -51,9 +51,4 @@ class UserController(
     fun delete(@PathVariable("id") id: Long){
         userService.delete(id);
     }
-
-    @GetMapping
-    fun findAllSqsMessages(): List<Message>?{
-        return sqsService.receiveMessage();
-    }
 }
