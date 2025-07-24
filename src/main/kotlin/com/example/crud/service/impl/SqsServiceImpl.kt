@@ -24,6 +24,7 @@ class SqsServiceImpl(private val sqsClient: SqsClient,
         val receiveMessageRequest = ReceiveMessageRequest.builder()
             .queueUrl(queueUrl)
             .maxNumberOfMessages(10)
+            .waitTimeSeconds(5)
             .build()
 
         val receiveResponse = sqsClient.receiveMessage(receiveMessageRequest);

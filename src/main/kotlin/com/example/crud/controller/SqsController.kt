@@ -1,5 +1,6 @@
 package com.example.crud.controller
 
+import com.example.crud.domain.dto.response.MessageResponse
 import com.example.crud.service.SqsService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,7 +14,12 @@ class SqsController(
 ) {
 
     @GetMapping
-    fun findAllSqsMessages(): List<Message>?{
-        return sqsService.receiveMessage();
+    fun findAllSqsMessages(): List<MessageResponse>?{
+        return sqsService.receiveMessage().map {
+            MessageResponse(
+                messageId = it.messageId(),
+                body = it.body()
+            )
+        }
     }
 }
