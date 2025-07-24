@@ -33,18 +33,39 @@ class UserController(
     }
 
     @GetMapping
-    fun findAll(): List<UserResponse>?{
-        return userService.findAll();
+    fun findAll(): ResponseEntity<List<UserResponse>>?{
+
+        val users = userService.findAll()
+
+        return if (users != null) {
+            ResponseEntity.ok(users)
+        } else {
+            ResponseEntity.noContent().build()
+        }
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable("id") id: Long): UserResponse?{
-        return userService.findById(id);
+    fun findById(@PathVariable("id") id: Long): ResponseEntity<UserResponse>?{
+
+        val userResponse = userService.findById(id)
+
+        return if (userResponse != null) {
+            ResponseEntity.ok(userResponse)
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable("id") id: Long, @RequestBody userRequest: UserRequest): UserResponse?{
-        return userService.update(id, userRequest);
+    fun update(@PathVariable("id") id: Long, @RequestBody userRequest: UserRequest): ResponseEntity<UserResponse>?{
+
+        val updatedUser = userService.update(id, userRequest)
+
+        return if (updatedUser != null) {
+            ResponseEntity.ok(updatedUser)
+        } else {
+            ResponseEntity.notFound().build()
+        }
     }
 
     @DeleteMapping("/{id}")
