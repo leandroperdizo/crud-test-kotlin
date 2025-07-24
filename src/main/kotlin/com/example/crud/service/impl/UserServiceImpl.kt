@@ -59,7 +59,7 @@ class UserServiceImpl(private val userRepository: UserRepository, private val us
         return userMapper.entityToDto(savedUser)
     }
 
-    override fun delete(id: Long) {
-        TODO("Not yet implemented")
+    override fun deleteById(id: Long) {
+        userRepository.deleteById(id)
     }
 }

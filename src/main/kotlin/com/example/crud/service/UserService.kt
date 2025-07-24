@@ -13,5 +13,5 @@ interface UserService {
 
     fun update(id: Long, userRequest: UserRequest) : UserResponse?;
 
-    fun delete(id: Long);
+    fun deleteById(id: Long);
 }

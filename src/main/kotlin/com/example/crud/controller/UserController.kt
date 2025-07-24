@@ -47,8 +47,8 @@ class UserController(
         return userService.update(id, userRequest);
     }
 
-    @DeleteMapping("/id")
-    fun delete(@PathVariable("id") id: Long){
-        userService.delete(id);
+    @DeleteMapping("/{id}")
+    fun deleteById(@PathVariable("id") id: Long){
+        userService.deleteById(id);
     }
 }
