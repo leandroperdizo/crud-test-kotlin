@@ -27,14 +27,14 @@ Siga os passos abaixo para configurar o projeto em sua máquina local:
 1. **Clone o repositório**:
    ```bash
    git clone https://github.com/leandroperdizo/crud-test-kotlin
-   cd demo2
+   cd crud-test-kotlin
    ```text
 
 2. **Configure o banco de dados**:
     - Crie um banco de dados MySQL chamado `crud`.
     - Atualize as credenciais no arquivo `src/main/resources/application.properties`:
       ```properties
-      spring.application.name=demo2
+      spring.application.name=crud-test-kotlin
       spring.datasource.url=jdbc:mysql://localhost:3306/crud
       spring.datasource.username=root
       spring.datasource.password=1234
@@ -96,7 +96,7 @@ Descreva como usar seu projeto. Inclua exemplos de chamadas de API, como enviar 
 
 ## Estrutura do Projeto
 
-/demo2
+/crud-test-kotlin
 │
 ├── src
 │   ├── main
