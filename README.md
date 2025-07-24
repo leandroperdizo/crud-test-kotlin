@@ -56,6 +56,8 @@ Siga os passos abaixo para configurar o projeto em sua máquina local:
 
 Descreva como usar seu projeto. Inclua exemplos de chamadas de API, como enviar e receber mensagens do SQS, e como interagir com o banco de dados.
 
+Collection completa: https://github.com/leandroperdizo/crud-test-kotlin/blob/main/Crud.postman_collection.json  
+
 ### Exemplos de API
 
 - **Criar Usuário**:
