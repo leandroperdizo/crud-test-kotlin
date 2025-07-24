@@ -33,9 +33,10 @@ class UserController(
     }
 
     @GetMapping
-    fun findAll(): ResponseEntity<List<UserResponse>>?{
+    fun findAll(@RequestParam(defaultValue = "0") page: Int,
+                @RequestParam(defaultValue = "10") size: Int): ResponseEntity<List<UserResponse>>?{
 
-        val users = userService.findAll()
+        val users = userService.findAll(page, size)
 
         return if (users != null) {
             ResponseEntity.ok(users)

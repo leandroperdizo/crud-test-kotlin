@@ -2,9 +2,12 @@ package com.example.crud.service.impl
 
 import com.example.crud.domain.dto.request.UserRequest
 import com.example.crud.domain.dto.response.UserResponse
+import com.example.crud.entity.UserEntity
 import com.example.crud.mapper.UserMapper
 import com.example.crud.repository.UserRepository
 import com.example.crud.service.UserService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,15 +19,15 @@ class UserServiceImpl(private val userRepository: UserRepository, private val us
         return userMapper.entityToDto(userRepository.save(user));
     }
 
-    override fun findAll(): List<UserResponse>? {
+    override fun findAll(page: Int, size: Int): List<UserResponse>? {
 
-        val users = userRepository.findAll();
+        val pageable = PageRequest.of(page, size)
+        val userPage: Page<UserEntity> = userRepository.findAll(pageable)
 
-        return if (!users.isEmpty()){
-            userMapper.entitiesToDto(users);
-        }
-        else{
-            null;
+        return if (userPage.hasContent()) {
+            userMapper.entitiesToDto(userPage.content)
+        } else {
+            null
         }
     }
 

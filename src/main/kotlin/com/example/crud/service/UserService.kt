@@ -7,7 +7,7 @@ interface UserService {
 
     fun save(userRequest: UserRequest) : UserResponse;
 
-    fun findAll() : List<UserResponse>?;
+    fun findAll(page: Int, size: Int) : List<UserResponse>?;
 
     fun findById(id: Long) : UserResponse?;
 
