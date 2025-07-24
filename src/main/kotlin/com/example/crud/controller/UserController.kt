@@ -1,9 +1,9 @@
-package com.example.demo2.controller
+package com.example.crud.controller
 
-import com.example.demo2.domain.dto.request.UserRequest
-import com.example.demo2.domain.dto.response.UserResponse
-import com.example.demo2.service.SqsService
-import com.example.demo2.service.UserService
+import com.example.crud.domain.dto.request.UserRequest
+import com.example.crud.domain.dto.response.UserResponse
+import com.example.crud.service.SqsService
+import com.example.crud.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI

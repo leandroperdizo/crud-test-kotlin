@@ -1,4 +1,4 @@
-package com.example.demo2.domain.dto.response
+package com.example.crud.domain.dto.response
 
 data class UserResponse (
     val id : Long,

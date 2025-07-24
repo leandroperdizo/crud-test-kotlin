@@ -1,4 +1,4 @@
-package com.example.demo2.service
+package com.example.crud.service
 
 import software.amazon.awssdk.services.sqs.model.Message
 

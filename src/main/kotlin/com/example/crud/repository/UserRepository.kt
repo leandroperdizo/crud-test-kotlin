@@ -1,6 +1,6 @@
-package com.example.demo2.repository
+package com.example.crud.repository
 
-import com.example.demo2.entity.UserEntity
+import com.example.crud.entity.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

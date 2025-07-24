@@ -1,7 +1,7 @@
-package com.example.demo2.service
+package com.example.crud.service
 
-import com.example.demo2.domain.dto.request.UserRequest
-import com.example.demo2.domain.dto.response.UserResponse
+import com.example.crud.domain.dto.request.UserRequest
+import com.example.crud.domain.dto.response.UserResponse
 
 interface UserService {
 

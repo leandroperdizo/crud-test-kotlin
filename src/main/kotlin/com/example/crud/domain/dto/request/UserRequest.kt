@@ -1,4 +1,4 @@
-package com.example.demo2.domain.dto.request
+package com.example.crud.domain.dto.request
 
 data class UserRequest (
     val id : Long,

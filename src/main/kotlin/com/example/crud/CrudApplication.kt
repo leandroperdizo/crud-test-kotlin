@@ -1,11 +1,11 @@
-package com.example.demo2
+package com.example.crud
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class Demo2Application
+class CrudApplication
 
 fun main(args: Array<String>) {
-	runApplication<Demo2Application>(*args)
+	runApplication<CrudApplication>(*args)
 }

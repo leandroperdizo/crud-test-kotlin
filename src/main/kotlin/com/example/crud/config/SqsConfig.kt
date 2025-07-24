@@ -1,4 +1,4 @@
-package com.example.demo2.config
+package com.example.crud.config
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean

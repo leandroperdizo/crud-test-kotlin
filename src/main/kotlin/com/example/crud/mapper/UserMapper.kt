@@ -1,8 +1,8 @@
-package com.example.demo2.mapper
+package com.example.crud.mapper
 
-import com.example.demo2.domain.dto.request.UserRequest
-import com.example.demo2.domain.dto.response.UserResponse
-import com.example.demo2.entity.UserEntity
+import com.example.crud.domain.dto.request.UserRequest
+import com.example.crud.domain.dto.response.UserResponse
+import com.example.crud.entity.UserEntity
 import org.springframework.stereotype.Component
 
 @Component

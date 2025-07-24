@@ -1,10 +1,10 @@
-package com.example.demo2.service.impl
+package com.example.crud.service.impl
 
-import com.example.demo2.domain.dto.request.UserRequest
-import com.example.demo2.domain.dto.response.UserResponse
-import com.example.demo2.mapper.UserMapper
-import com.example.demo2.repository.UserRepository
-import com.example.demo2.service.UserService
+import com.example.crud.domain.dto.request.UserRequest
+import com.example.crud.domain.dto.response.UserResponse
+import com.example.crud.mapper.UserMapper
+import com.example.crud.repository.UserRepository
+import com.example.crud.service.UserService
 import org.springframework.stereotype.Service
 
 @Service

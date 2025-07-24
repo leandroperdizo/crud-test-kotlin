@@ -1,6 +1,6 @@
-package com.example.demo2.service.impl
+package com.example.crud.service.impl
 
-import com.example.demo2.service.SqsService
+import com.example.crud.service.SqsService
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.services.sqs.SqsClient
 import software.amazon.awssdk.services.sqs.model.Message
