@@ -25,7 +25,6 @@ class SqsConfig {
                     AwsBasicCredentials.create("test", "test")
                 )
             )
-            //.httpClient(UrlConnectionHttpClient.create())
             .build()
     }
 

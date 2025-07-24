@@ -6,6 +6,7 @@ import com.example.crud.service.SqsService
 import com.example.crud.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import software.amazon.awssdk.services.sqs.model.Message
 import java.net.URI
 
 @RestController
@@ -49,5 +50,10 @@ class UserController(
     @DeleteMapping("/id")
     fun delete(@PathVariable("id") id: Long){
         userService.delete(id);
+    }
+
+    @GetMapping
+    fun findAllSqsMessages(): List<Message>?{
+        return sqsService.receiveMessage();
     }
 }
