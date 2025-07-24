@@ -94,25 +94,4 @@ Descreva como usar seu projeto. Inclua exemplos de chamadas de API, como enviar 
   DELETE /user/{id}
   ```text
 
-## Estrutura do Projeto
-
-/crud-test-kotlin
-│
-├── src
-│   ├── main
-│   │   ├── kotlin
-│   │   │   └── com
-│   │   │       └── example
-│   │   │           ├── controller
-│   │   │           ├── service
-│   │   │           ├── repository
-│   │   │           └── model
-│   │   └── resources
-│   │       └── application.properties
-│   └── test
-│       └── kotlin
-│           └── com
-│               └── example
-│                   └── UserServiceTest.kt
-
     
