@@ -19,6 +19,7 @@ Este projeto é uma aplicação Kotlin que integra com o Amazon SQS e um banco d
 - MySQL
 - AWS SDK (para SQS)
 - JUnit (para testes)
+- Essa aplicação roda localmente com o Localstack
 
 ## Instalação
 
