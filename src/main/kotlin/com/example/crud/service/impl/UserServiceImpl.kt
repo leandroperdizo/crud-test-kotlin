@@ -42,7 +42,21 @@ class UserServiceImpl(private val userRepository: UserRepository, private val us
         id: Long,
         userRequest: UserRequest
     ): UserResponse? {
-        TODO("Not yet implemented")
+
+        val user = userRepository.findById(id)
+
+        if (user.isEmpty) {
+            return null
+        }
+
+        val updatedUser = user.get().copy(
+            name = userRequest.name,
+            email = userRequest.email
+        )
+
+        val savedUser = userRepository.save(updatedUser)
+
+        return userMapper.entityToDto(savedUser)
     }
 
     override fun delete(id: Long) {
