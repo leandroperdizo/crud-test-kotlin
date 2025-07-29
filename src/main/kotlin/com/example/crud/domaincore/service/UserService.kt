@@ -6,7 +6,7 @@ import com.example.crud.webadapter.dto.response.UserResponse
 
 interface UserService {
 
-    fun save(userRequest: UserDomain) : UserResponse;
+    fun save(userDomain UserDomain) : UserResponse;
 
     fun findAll(page: Int, size: Int) : List<UserResponse>?;
 
