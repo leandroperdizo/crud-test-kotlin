@@ -1,4 +1,4 @@
-package com.example.crud.service
+package com.example.crud.domaincore.service
 
 import software.amazon.awssdk.services.sqs.model.Message
 

@@ -1,11 +1,11 @@
-package com.example.crud.service.impl
+package com.example.crud.domaincore.service.impl
 
-import com.example.crud.domain.dto.request.UserRequest
-import com.example.crud.domain.dto.response.UserResponse
-import com.example.crud.entity.UserEntity
-import com.example.crud.mapper.UserMapper
-import com.example.crud.repository.UserRepository
-import com.example.crud.service.UserService
+import com.example.crud.webadapter.dto.request.UserRequest
+import com.example.crud.webadapter.dto.response.UserResponse
+import com.example.crud.resourceadapter.entity.UserEntity
+import com.example.crud.webadapter.mapper.UserMapper
+import com.example.crud.resourceadapter.repository.UserRepository
+import com.example.crud.domaincore.service.UserService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service

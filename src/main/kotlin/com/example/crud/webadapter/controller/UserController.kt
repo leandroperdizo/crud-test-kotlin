@@ -1,25 +1,29 @@
-package com.example.crud.controller
+package com.example.crud.webadapter.controller
 
-import com.example.crud.domain.dto.request.UserRequest
-import com.example.crud.domain.dto.response.UserResponse
-import com.example.crud.service.SqsService
-import com.example.crud.service.UserService
+import com.example.crud.webadapter.dto.request.UserRequest
+import com.example.crud.webadapter.dto.response.UserResponse
+import com.example.crud.domaincore.service.SqsService
+import com.example.crud.domaincore.service.UserService
+import com.example.crud.domaincore.service.domainEntity.UserDomain
+import com.example.crud.webadapter.mapper.UserMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import software.amazon.awssdk.services.sqs.model.Message
 import java.net.URI
 
 @RestController
 @RequestMapping("/user")
 class UserController(
     private val userService: UserService,
-    private val sqsService: SqsService
+    private val sqsService: SqsService,
+    private val userMapper: UserMapper
 ) {
 
     @PostMapping
     fun save(@RequestBody userRequest: UserRequest): ResponseEntity<UserResponse>{
 
-        val response: UserResponse? = userService.save(userRequest)
+        val userDomain = userMapper.dtoToDomain(userRequest)
+
+        val response: UserResponse? = userService.save(userDomain)
 
         return if (response != null) {
 

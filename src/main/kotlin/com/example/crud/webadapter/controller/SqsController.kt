@@ -1,11 +1,10 @@
-package com.example.crud.controller
+package com.example.crud.webadapter.controller
 
-import com.example.crud.domain.dto.response.MessageResponse
-import com.example.crud.service.SqsService
+import com.example.crud.webadapter.dto.response.MessageResponse
+import com.example.crud.domaincore.service.SqsService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import software.amazon.awssdk.services.sqs.model.Message
 
 @RestController
 @RequestMapping("/sqs")

@@ -1,4 +1,4 @@
-package com.example.crud.domain.dto.response
+package com.example.crud.webadapter.dto.response
 
 data class MessageResponse(
     val messageId: String,
