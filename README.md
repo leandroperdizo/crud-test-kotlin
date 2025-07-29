@@ -7,10 +7,6 @@ Este projeto é uma aplicação Kotlin que integra com o Amazon SQS e um banco d
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Instalação](#instalação)
 - [Uso](#uso)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Testes](#testes)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
 
 ## Tecnologias Utilizadas
 
@@ -55,6 +51,8 @@ Siga os passos abaixo para configurar o projeto em sua máquina local:
 ## Uso
 
 Descreva como usar seu projeto. Inclua exemplos de chamadas de API, como enviar e receber mensagens do SQS, e como interagir com o banco de dados.
+
+Collection completa: https://github.com/leandroperdizo/crud-test-kotlin/blob/main/Crud.postman_collection.json  
 
 ### Exemplos de API
 
