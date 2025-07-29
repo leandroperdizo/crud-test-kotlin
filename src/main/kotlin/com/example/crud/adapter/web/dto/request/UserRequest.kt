@@ -1,4 +1,4 @@
-package com.example.crud.webadapter.dto.request
+package com.example.crud.adapter.web.dto.request
 
 data class UserRequest (
     val id : Long,

@@ -1,0 +1,38 @@
+package com.example.crud.adapter.web.mapper
+
+import com.example.crud.domain.entity.request.UserRequestDomain
+import com.example.crud.domain.entity.response.UserResponseDomain
+import com.example.crud.adapter.web.dto.request.UserRequest
+import com.example.crud.adapter.web.dto.response.UserResponse
+import com.example.crud.adapter.resource.db.entity.UserEntity
+import org.springframework.stereotype.Component
+
+@Component
+class UserWebMapper {
+
+    fun dtoToDomain(userRequest: UserRequest) : UserRequestDomain{
+        return UserRequestDomain(
+            id = userRequest.id,
+            name = userRequest.name,
+            email = userRequest.email
+        );
+    }
+
+    fun domainToDto(userResponseDomain: UserResponseDomain) : UserResponse{
+        return UserResponse(
+            id = userResponseDomain.id,
+            name = userResponseDomain.name,
+            email = userResponseDomain.email
+        );
+    }
+
+    fun entitiesToDto(userEntities: List<UserEntity>) : List<UserResponse> {
+        return userEntities.map { user ->
+            UserResponse(
+                id = user.id,
+                name = user.name,
+                email = user.email
+            );
+        }
+    }
+}

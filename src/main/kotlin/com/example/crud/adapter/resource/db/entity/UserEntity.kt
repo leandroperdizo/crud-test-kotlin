@@ -1,4 +1,4 @@
-package com.example.crud.resourceadapter.entity
+package com.example.crud.adapter.resource.db.entity
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

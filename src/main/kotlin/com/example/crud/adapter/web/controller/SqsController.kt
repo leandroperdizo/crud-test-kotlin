@@ -1,7 +1,7 @@
-package com.example.crud.webadapter.controller
+package com.example.crud.adapter.web.controller
 
-import com.example.crud.webadapter.dto.response.MessageResponse
-import com.example.crud.domaincore.service.SqsService
+import com.example.crud.adapter.web.dto.response.MessageResponse
+import com.example.crud.domain.SqsService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

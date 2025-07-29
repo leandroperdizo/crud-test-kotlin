@@ -1,11 +1,11 @@
-package com.example.crud.webadapter.controller
+package com.example.crud.adapter.web.controller
 
-import com.example.crud.webadapter.dto.request.UserRequest
-import com.example.crud.webadapter.dto.response.UserResponse
-import com.example.crud.domaincore.service.SqsService
-import com.example.crud.domaincore.service.UserService
-import com.example.crud.domaincore.service.domainEntity.UserDomain
-import com.example.crud.webadapter.mapper.UserMapper
+import com.example.crud.adapter.web.dto.request.UserRequest
+import com.example.crud.adapter.web.dto.response.UserResponse
+import com.example.crud.domain.SqsService
+import com.example.crud.domain.UserService
+import com.example.crud.domain.entity.response.UserResponseDomain
+import com.example.crud.adapter.web.mapper.UserWebMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
@@ -15,7 +15,7 @@ import java.net.URI
 class UserController(
     private val userService: UserService,
     private val sqsService: SqsService,
-    private val userMapper: UserMapper
+    private val userMapper: UserWebMapper
 ) {
 
     @PostMapping
@@ -23,7 +23,9 @@ class UserController(
 
         val userDomain = userMapper.dtoToDomain(userRequest)
 
-        val response: UserResponse? = userService.save(userDomain)
+        val user: UserResponseDomain = userService.save(userDomain)
+
+        val response = userMapper.domainToDto(user)
 
         return if (response != null) {
 
@@ -36,7 +38,7 @@ class UserController(
         }
     }
 
-    @GetMapping
+    /*@GetMapping
     fun findAll(@RequestParam(defaultValue = "0") page: Int,
                 @RequestParam(defaultValue = "10") size: Int): ResponseEntity<List<UserResponse>>?{
 
@@ -76,5 +78,5 @@ class UserController(
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable("id") id: Long){
         userService.deleteById(id);
-    }
+    }*/
 }

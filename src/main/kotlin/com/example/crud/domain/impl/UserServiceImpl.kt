@@ -1,25 +1,20 @@
-package com.example.crud.domaincore.service.impl
+package com.example.crud.domain.impl
 
-import com.example.crud.webadapter.dto.request.UserRequest
-import com.example.crud.webadapter.dto.response.UserResponse
-import com.example.crud.resourceadapter.entity.UserEntity
-import com.example.crud.webadapter.mapper.UserMapper
-import com.example.crud.resourceadapter.repository.UserRepository
-import com.example.crud.domaincore.service.UserService
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
+import com.example.crud.adapter.resource.UserResource
+import com.example.crud.adapter.resource.impl.UserResourceImplDb
+import com.example.crud.domain.UserService
+import com.example.crud.domain.entity.request.UserRequestDomain
+import com.example.crud.domain.entity.response.UserResponseDomain
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl(private val userRepository: UserRepository, private val userMapper: UserMapper) : UserService {
-    override fun save(userRequest: UserRequest): UserResponse {
+class UserServiceImpl(private val userResource: UserResource) : UserService {
+    override fun save(userRequestDomain: UserRequestDomain): UserResponseDomain {
 
-        val user = userMapper.dtoToEntity(userRequest);
-
-        return userMapper.entityToDto(userRepository.save(user));
+        return userResource.save(userRequestDomain);
     }
 
-    override fun findAll(page: Int, size: Int): List<UserResponse>? {
+    /*override fun findAll(page: Int, size: Int): List<UserResponse>? {
 
         val pageable = PageRequest.of(page, size)
         val userPage: Page<UserEntity> = userRepository.findAll(pageable)
@@ -64,5 +59,5 @@ class UserServiceImpl(private val userRepository: UserRepository, private val us
 
     override fun deleteById(id: Long) {
         userRepository.deleteById(id)
-    }
+    }*/
 }

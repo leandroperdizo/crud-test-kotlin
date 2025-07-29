@@ -1,6 +1,6 @@
 package com.example.crud
 
-import com.example.crud.domaincore.service.impl.SqsServiceImpl
+import com.example.crud.domain.impl.SqsServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
