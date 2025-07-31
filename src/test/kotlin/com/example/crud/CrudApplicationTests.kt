@@ -7,6 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest
 class CrudApplicationTests {
 
 	@Test
-	fun contextLoads() {
+	fun `should load context`() {
 	}
 }
