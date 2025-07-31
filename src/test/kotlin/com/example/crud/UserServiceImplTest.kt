@@ -1,126 +1,106 @@
 package com.example.crud
 
-import com.example.crud.adapter.web.dto.request.UserRequest
-import com.example.crud.adapter.web.dto.response.UserResponse
-import com.example.crud.adapter.db.entity.UserEntity
-import com.example.crud.adapter.web.mapper.UserWebMapper
-import com.example.crud.adapter.db.repository.UserDbAdapterRepository
+import com.example.crud.domain.model.request.UserRequestDomain
+import com.example.crud.domain.model.response.UserResponseDomain
+import com.example.crud.domain.port.UserRepository
 import com.example.crud.domain.usecase.impl.UserUseCaseImpl
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
-import java.util.*
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
-class UserServiceImplTest {
+class UserUseCaseImplTest {
 
-    private val userRepository: UserDbAdapterRepository = mock(UserDbAdapterRepository::class.java)
-    private val userMapper: UserWebMapper = mock(UserWebMapper::class.java)
-    private val userService = UserUseCaseImpl(userRepository, userMapper)
+    private lateinit var userRepository: UserRepository
+    private lateinit var userUseCase: UserUseCaseImpl
 
-    @Test
-    fun `save should return UserResponse when user is saved`() {
-        val userRequest = UserRequest(id = 1, name = "Alice", email = "alice@example.com")
-        val userEntity = UserEntity(id = 1, name = "Alice", email = "alice@example.com")
-        val userResponse = UserResponse(id = 1, name = "Alice", email = "alice@example.com")
-
-        `when`(userMapper.dtoToEntity(userRequest)).thenReturn(userEntity)
-        `when`(userRepository.save(userEntity)).thenReturn(userEntity)
-        `when`(userMapper.entityToDto(userEntity)).thenReturn(userResponse)
-
-        val result = userService.save(userRequest)
-
-        verify(userMapper).dtoToEntity(userRequest)
-        verify(userRepository).save(userEntity)
-        verify(userMapper).entityToDto(userEntity)
-        assertEquals(userResponse, result)
+    @BeforeEach
+    fun setup() {
+        userRepository = mock(UserRepository::class.java)
+        userUseCase = UserUseCaseImpl(userRepository)
     }
 
     @Test
-    fun `findAll should return a list of UserResponse when users are found`() {
-        val userEntity1 = UserEntity(id = 1, name = "Alice", email = "alice@example.com")
-        val userEntity2 = UserEntity(id = 2, name = "Bob", email = "bob@example.com")
-        val userResponse1 = UserResponse(id = 1, name = "Alice", email = "alice@example.com")
-        val userResponse2 = UserResponse(id = 2, name = "Bob", email = "bob@example.com")
+    fun `save should return saved user`() {
+        val request = UserRequestDomain(id = 1L, name = "Leandro", email = "leandro@example.com")
+        val expected = UserResponseDomain(id = 1L, name = "Leandro", email = "leandro@example.com")
 
-        val userPage: Page<UserEntity> = mock(Page::class.java) as Page<UserEntity>
-        `when`(userPage.hasContent()).thenReturn(true)
-        `when`(userPage.content).thenReturn(listOf(userEntity1, userEntity2))
+        `when`(userRepository.save(request)).thenReturn(expected)
 
-        `when`(userRepository.findAll(any<Pageable>())).thenReturn(userPage)
-        `when`(userMapper.entitiesToDto(listOf(userEntity1, userEntity2))).thenReturn(listOf(userResponse1, userResponse2))
+        val result = userUseCase.save(request)
 
-        val result = userService.findAll(0, 10)
-
-        verify(userRepository).findAll(any<Pageable>())
-        verify(userMapper).entitiesToDto(listOf(userEntity1, userEntity2))
-        assertEquals(2, result?.size)
-        assertEquals(userResponse1, result?.get(0))
-        assertEquals(userResponse2, result?.get(1))
+        assertEquals(expected, result)
     }
 
     @Test
-    fun `findById should return UserResponse when user is found`() {
-        val userEntity = UserEntity(id = 1, name = "Alice", email = "alice@example.com")
-        val userResponse = UserResponse(id = 1, name = "Alice", email = "alice@example.com")
+    fun `findAll should return list of users when page has content`() {
+        val users = listOf(
+            UserResponseDomain(1L, "A", "a@example.com"),
+            UserResponseDomain(2L, "B", "b@example.com")
+        )
+        val pageable = PageRequest.of(0, 10)
+        val page: Page<UserResponseDomain> = PageImpl(users, pageable, users.size.toLong())
 
-        `when`(userRepository.findById(1)).thenReturn(Optional.of(userEntity))
-        `when`(userMapper.entityToDto(userEntity)).thenReturn(userResponse)
+        `when`(userRepository.findAll(pageable)).thenReturn(page)
 
-        val result = userService.findById(1)
+        val result = userUseCase.findAll(0, 10)
 
-        verify(userRepository).findById(1)
-        verify(userMapper).entityToDto(userEntity)
-        assertEquals(userResponse, result)
+        assertEquals(users, result)
     }
 
     @Test
-    fun `findById should return null when user is not found`() {
-        `when`(userRepository.findById(1)).thenReturn(Optional.empty())
+    fun `findAll should return null when page is empty`() {
+        val pageable = PageRequest.of(0, 10)
+        val emptyPage: Page<UserResponseDomain> = PageImpl(emptyList(), pageable, 0)
 
-        val result = userService.findById(1)
+        `when`(userRepository.findAll(pageable)).thenReturn(emptyPage)
 
-        verify(userRepository).findById(1)
+        val result = userUseCase.findAll(0, 10)
+
         assertNull(result)
     }
 
     @Test
-    fun `update should return UserResponse when user is updated`() {
-        val userRequest = UserRequest(id = 1, name = "Alice Updated", email = "alice.updated@example.com")
-        val userEntity = UserEntity(id = 1, name = "Alice", email = "alice@example.com")
-        val updatedUserEntity = userEntity.copy(name = userRequest.name, email = userRequest.email)
-        val userResponse = UserResponse(id = 1, name = "Alice Updated", email = "alice.updated@example.com")
+    fun `findById should return user if exists`() {
+        val expected = UserResponseDomain(1L, "Carlos", "carlos@example.com")
+        `when`(userRepository.findById(1L)).thenReturn(expected)
 
-        `when`(userRepository.findById(1)).thenReturn(Optional.of(userEntity))
-        `when`(userRepository.save(updatedUserEntity)).thenReturn(updatedUserEntity)
-        `when`(userMapper.entityToDto(updatedUserEntity)).thenReturn(userResponse)
+        val result = userUseCase.findById(1L)
 
-        val result = userService.update(1, userRequest)
-
-        verify(userRepository).findById(1)
-        verify(userRepository).save(updatedUserEntity)
-        verify(userMapper).entityToDto(updatedUserEntity)
-        assertEquals(userResponse, result)
+        assertEquals(expected, result)
     }
 
     @Test
-    fun `update should return null when user is not found`() {
-        val userRequest = UserRequest(id = 1, name = "Alice Updated", email = "alice.updated@example.com")
+    fun `findById should return null if not found`() {
+        `when`(userRepository.findById(999L)).thenReturn(null)
 
-        `when`(userRepository.findById(1)).thenReturn(Optional.empty())
+        val result = userUseCase.findById(999L)
 
-        val result = userService.update(1, userRequest)
-
-        verify(userRepository).findById(1)
         assertNull(result)
     }
 
     @Test
-    fun `deleteById should call delete on userRepository`() {
-        userService.deleteById(1)
+    fun `update should return updated user`() {
+        val request = UserRequestDomain(id = 1L, "Updated", "updated@example.com")
+        val expected = UserResponseDomain(1L, "Updated", "updated@example.com")
 
-        verify(userRepository).deleteById(1)
+        `when`(userRepository.update(1L, request)).thenReturn(expected)
+
+        val result = userUseCase.update(1L, request)
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun `deleteById should call repository delete`() {
+        doNothing().`when`(userRepository).deleteById(1L)
+
+        userUseCase.deleteById(1L)
+
+        verify(userRepository, times(1)).deleteById(1L)
     }
 }
