@@ -1,7 +1,7 @@
 package com.example.crud.adapter.web.controller
 
 import com.example.crud.adapter.web.dto.response.MessageResponse
-import com.example.crud.domain.SqsService
+import com.example.crud.domain.usecase.SqsUseCase
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/sqs")
 class SqsController(
-    private val sqsService: SqsService
+    private val sqsUseCase: SqsUseCase
 ) {
 
     @GetMapping
     fun findAllSqsMessages(): List<MessageResponse>?{
-        return sqsService.receiveMessage().map {
+        return sqsUseCase.receiveMessage().map {
             MessageResponse(
                 messageId = it.messageId(),
                 body = it.body()

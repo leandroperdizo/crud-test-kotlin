@@ -1,6 +1,6 @@
 package com.example.crud
 
-import com.example.crud.domain.impl.SqsServiceImpl
+import com.example.crud.domain.usecase.impl.SqsUseCaseImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.*
@@ -11,7 +11,7 @@ class SqsServiceImplTest {
 
     private val sqsClient: SqsClient = mock(SqsClient::class.java)
     private val queueUrl = "https://sqs.us-east-1.amazonaws.com/123456789012/my-queue"
-    private val sqsService = SqsServiceImpl(sqsClient, queueUrl)
+    private val sqsService = SqsUseCaseImpl(sqsClient, queueUrl)
 
     @Test
     fun `sendMessage should send a message to SQS`() {

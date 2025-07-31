@@ -1,9 +1,9 @@
-package com.example.crud.domain
+package com.example.crud.domain.usecase
 
-import com.example.crud.domain.entity.request.UserRequestDomain
-import com.example.crud.domain.entity.response.UserResponseDomain
+import com.example.crud.domain.model.request.UserRequestDomain
+import com.example.crud.domain.model.response.UserResponseDomain
 
-interface UserService {
+interface UserUseCase {
 
     fun save(userRequestDomain: UserRequestDomain) : UserResponseDomain;
 

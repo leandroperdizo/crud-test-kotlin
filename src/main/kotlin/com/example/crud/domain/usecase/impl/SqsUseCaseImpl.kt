@@ -1,6 +1,6 @@
-package com.example.crud.domain.impl
+package com.example.crud.domain.usecase.impl
 
-import com.example.crud.domain.SqsService
+import com.example.crud.domain.usecase.SqsUseCase
 import org.springframework.stereotype.Service
 import software.amazon.awssdk.services.sqs.SqsClient
 import software.amazon.awssdk.services.sqs.model.Message
@@ -8,8 +8,8 @@ import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest
 
 @Service
-class SqsServiceImpl(private val sqsClient: SqsClient,
-                     private val queueUrl: String) : SqsService {
+class SqsUseCaseImpl(private val sqsClient: SqsClient,
+                     private val queueUrl: String) : SqsUseCase {
 
     override fun sendMessage(message: String) {
         val sendMessageRequest = SendMessageRequest.builder()

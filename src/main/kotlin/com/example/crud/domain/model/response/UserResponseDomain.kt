@@ -1,4 +1,4 @@
-package com.example.crud.domain.entity.response
+package com.example.crud.domain.model.response
 
 data class UserResponseDomain (
 

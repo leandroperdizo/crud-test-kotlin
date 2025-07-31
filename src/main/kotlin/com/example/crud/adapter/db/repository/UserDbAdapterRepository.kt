@@ -1,6 +1,6 @@
-package com.example.crud.adapter.resource.db.repository
+package com.example.crud.adapter.db.repository
 
-import com.example.crud.adapter.resource.db.entity.UserEntity
+import com.example.crud.adapter.db.model.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 

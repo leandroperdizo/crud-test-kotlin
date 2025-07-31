@@ -1,24 +1,24 @@
-package com.example.crud.domain.impl
+package com.example.crud.domain.usecase.impl
 
-import com.example.crud.domain.UserRepository
-import com.example.crud.domain.UserService
-import com.example.crud.domain.entity.request.UserRequestDomain
-import com.example.crud.domain.entity.response.UserResponseDomain
+import com.example.crud.domain.port.UserRepository
+import com.example.crud.domain.usecase.UserUseCase
+import com.example.crud.domain.model.request.UserRequestDomain
+import com.example.crud.domain.model.response.UserResponseDomain
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl(private val userResource: UserRepository) : UserService {
+class UserUseCaseImpl(private val userRepository: UserRepository) : UserUseCase {
     override fun save(userRequestDomain: UserRequestDomain): UserResponseDomain {
 
-        return userResource.save(userRequestDomain);
+        return userRepository.save(userRequestDomain);
     }
 
     override fun findAll(page: Int, size: Int): List<UserResponseDomain>? {
 
         val pageable = PageRequest.of(page, size)
-        val userPage: Page<UserResponseDomain> = userResource.findAll(pageable)
+        val userPage: Page<UserResponseDomain> = userRepository.findAll(pageable)
 
         return if (userPage.hasContent()) {
             userPage.content

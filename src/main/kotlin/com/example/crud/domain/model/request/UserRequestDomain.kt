@@ -1,4 +1,4 @@
-package com.example.crud.domain.entity.request
+package com.example.crud.domain.model.request
 
 data class UserRequestDomain (
 

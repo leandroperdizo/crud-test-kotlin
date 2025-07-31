@@ -1,9 +1,8 @@
-package com.example.crud.adapter.resource.mapper
+package com.example.crud.adapter.db.mapper
 
-import com.example.crud.domain.entity.request.UserRequestDomain
-import com.example.crud.domain.entity.response.UserResponseDomain
-import com.example.crud.adapter.web.dto.response.UserResponse
-import com.example.crud.adapter.resource.db.entity.UserEntity
+import com.example.crud.domain.model.request.UserRequestDomain
+import com.example.crud.domain.model.response.UserResponseDomain
+import com.example.crud.adapter.db.model.UserEntity
 import org.springframework.stereotype.Component
 
 @Component

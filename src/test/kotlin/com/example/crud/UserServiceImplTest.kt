@@ -2,10 +2,10 @@ package com.example.crud
 
 import com.example.crud.adapter.web.dto.request.UserRequest
 import com.example.crud.adapter.web.dto.response.UserResponse
-import com.example.crud.adapter.resource.db.entity.UserEntity
+import com.example.crud.adapter.db.model.UserEntity
 import com.example.crud.adapter.web.mapper.UserWebMapper
-import com.example.crud.adapter.resource.db.repository.UserDbAdapterRepository
-import com.example.crud.domain.impl.UserServiceImpl
+import com.example.crud.adapter.db.repository.UserDbAdapterRepository
+import com.example.crud.domain.usecase.impl.UserUseCaseImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
@@ -18,7 +18,7 @@ class UserServiceImplTest {
 
     private val userRepository: UserDbAdapterRepository = mock(UserDbAdapterRepository::class.java)
     private val userMapper: UserWebMapper = mock(UserWebMapper::class.java)
-    private val userService = UserServiceImpl(userRepository, userMapper)
+    private val userService = UserUseCaseImpl(userRepository, userMapper)
 
     @Test
     fun `save should return UserResponse when user is saved`() {

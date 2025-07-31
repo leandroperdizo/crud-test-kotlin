@@ -1,11 +1,11 @@
-package com.example.crud.adapter.resource.db
+package com.example.crud.adapter.db.impldomain
 
-import com.example.crud.adapter.resource.db.entity.UserEntity
-import com.example.crud.adapter.resource.db.repository.UserDbAdapterRepository
-import com.example.crud.adapter.resource.mapper.UserResourceMapper
-import com.example.crud.domain.UserRepository
-import com.example.crud.domain.entity.request.UserRequestDomain
-import com.example.crud.domain.entity.response.UserResponseDomain
+import com.example.crud.adapter.db.model.UserEntity
+import com.example.crud.adapter.db.repository.UserDbAdapterRepository
+import com.example.crud.adapter.db.mapper.UserResourceMapper
+import com.example.crud.domain.port.UserRepository
+import com.example.crud.domain.model.request.UserRequestDomain
+import com.example.crud.domain.model.response.UserResponseDomain
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserRepositoryAdapter(private val userRepository: UserDbAdapterRepository,
                             private val userMapper: UserResourceMapper
-) : com.example.crud.domain.UserRepository {
+) : UserRepository {
 
     override fun save(userRequestDomain: UserRequestDomain) : UserResponseDomain {
 
