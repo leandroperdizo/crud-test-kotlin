@@ -1,9 +1,9 @@
 package com.example.crud.domain.usecase.impl
 
-import com.example.crud.domain.port.UserRepository
-import com.example.crud.domain.usecase.UserUseCase
 import com.example.crud.domain.model.request.UserRequestDomain
 import com.example.crud.domain.model.response.UserResponseDomain
+import com.example.crud.domain.port.UserRepository
+import com.example.crud.domain.usecase.UserUseCase
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
@@ -28,34 +28,15 @@ class UserUseCaseImpl(private val userRepository: UserRepository) : UserUseCase 
     }
 
     override fun findById(id: Long): UserResponseDomain? {
-        val user = userRepository.findById(id)
-
-        return if (user != null) {
-            user
-        } else {
-            null
-        }
+        return userRepository.findById(id)
     }
 
     override fun update(
         id: Long,
-        userRequest: UserRequestDomain
-    ): UserResponse? {
+        userRequestDomain: UserRequestDomain
+    ): UserResponseDomain? {
 
-        val user = userRepository.findById(id)
-
-        if (user.isEmpty) {
-            return null
-        }
-
-        val updatedUser = user.get().copy(
-            name = userRequest.name,
-            email = userRequest.email
-        )
-
-        val savedUser = userRepository.save(updatedUser)
-
-        return userMapper.entityToDto(savedUser)
+        return userRepository.update(id, userRequestDomain)
     }
 
     override fun deleteById(id: Long) {

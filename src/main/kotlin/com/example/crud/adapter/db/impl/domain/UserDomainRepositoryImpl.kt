@@ -45,10 +45,20 @@ class UserDomainRepositoryImpl(private val userRepository: UserDbAdapterReposito
         id: Long,
         userRequestDomain: UserRequestDomain
     ): UserResponseDomain {
-        TODO("Not yet implemented")
+        val userEntity = userRepository.findById(id)
+            .orElseThrow { NoSuchElementException("Usuário com id $id não encontrado.") }
+
+        val updatedUser = userEntity.copy(
+            name = userRequestDomain.name,
+            email = userRequestDomain.email
+        )
+
+        userRepository.save(updatedUser)
+
+        return userMapper.entityToDomain(updatedUser)
     }
 
-    override fun deleteById(id: Long): UserResponseDomain {
-        TODO("Not yet implemented")
+    override fun deleteById(id: Long) {
+        userRepository.deleteById(id)
     }
 }
