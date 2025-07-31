@@ -17,7 +17,7 @@ class SqsUseCaseImpl(private val sqsClient: SqsClient,
             .messageBody(message)
         .build()
 
-        val sendResponse = sqsClient.sendMessage(sendMessageRequest);
+        sqsClient.sendMessage(sendMessageRequest);
     }
 
     override fun receiveMessage(): List<Message> {
