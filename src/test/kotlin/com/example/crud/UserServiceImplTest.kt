@@ -2,7 +2,7 @@ package com.example.crud
 
 import com.example.crud.adapter.web.dto.request.UserRequest
 import com.example.crud.adapter.web.dto.response.UserResponse
-import com.example.crud.adapter.db.model.UserEntity
+import com.example.crud.adapter.db.entity.UserEntity
 import com.example.crud.adapter.web.mapper.UserWebMapper
 import com.example.crud.adapter.db.repository.UserDbAdapterRepository
 import com.example.crud.domain.usecase.impl.UserUseCaseImpl

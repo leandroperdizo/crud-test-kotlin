@@ -1,6 +1,6 @@
-package com.example.crud.adapter.db.impldomain
+package com.example.crud.adapter.db.impl.domain
 
-import com.example.crud.adapter.db.model.UserEntity
+import com.example.crud.adapter.db.entity.UserEntity
 import com.example.crud.adapter.db.repository.UserDbAdapterRepository
 import com.example.crud.adapter.db.mapper.UserResourceMapper
 import com.example.crud.domain.port.UserRepository
@@ -12,8 +12,8 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
-class UserRepositoryAdapter(private val userRepository: UserDbAdapterRepository,
-                            private val userMapper: UserResourceMapper
+class UserDomainRepositoryImpl(private val userRepository: UserDbAdapterRepository,
+                               private val userMapper: UserResourceMapper
 ) : UserRepository {
 
     override fun save(userRequestDomain: UserRequestDomain) : UserResponseDomain {
@@ -32,8 +32,13 @@ class UserRepositoryAdapter(private val userRepository: UserDbAdapterRepository,
         return PageImpl(usersResponseDomain, pageRequest, usersEntity.totalElements)
     }
 
-    override fun findById(id: Long): UserResponseDomain {
-        TODO("Not yet implemented")
+    override fun findById(id: Long): UserResponseDomain? {
+        val userOptional = userRepository.findById(id)
+        return if (userOptional.isPresent) {
+            userMapper.entityToDomain(userOptional.get())
+        } else {
+            null
+        }
     }
 
     override fun update(

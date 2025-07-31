@@ -2,7 +2,7 @@ package com.example.crud.adapter.db.mapper
 
 import com.example.crud.domain.model.request.UserRequestDomain
 import com.example.crud.domain.model.response.UserResponseDomain
-import com.example.crud.adapter.db.model.UserEntity
+import com.example.crud.adapter.db.entity.UserEntity
 import org.springframework.stereotype.Component
 
 @Component

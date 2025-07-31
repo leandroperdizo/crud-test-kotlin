@@ -28,12 +28,12 @@ class UserUseCaseImpl(private val userRepository: UserRepository) : UserUseCase 
     }
 
     override fun findById(id: Long): UserResponseDomain? {
-        val user = userRepository.findById(id);
+        val user = userRepository.findById(id)
 
-        return if(!user.isEmpty) {
-            userMapper.entityToDto(user.get());
-        }else{
-            null;
+        return if (user != null) {
+            user
+        } else {
+            null
         }
     }
 

@@ -11,7 +11,7 @@ interface UserRepository {
 
     fun findAll(pageRequest: PageRequest) : Page<UserResponseDomain>
 
-    fun findById(id: Long) : UserResponseDomain
+    fun findById(id: Long) : UserResponseDomain?
 
     fun update(id: Long, userRequestDomain: UserRequestDomain) : UserResponseDomain
 
