@@ -25,9 +25,9 @@ class UserResourceMapper {
         );
     }
 
-    fun entitiesToDto(userEntities: List<UserEntity>) : List<UserResponse> {
+    fun entitiesToDomain(userEntities: List<UserEntity>) : List<UserResponseDomain> {
         return userEntities.map { user ->
-            UserResponse(
+            UserResponseDomain(
                 id = user.id,
                 name = user.name,
                 email = user.email

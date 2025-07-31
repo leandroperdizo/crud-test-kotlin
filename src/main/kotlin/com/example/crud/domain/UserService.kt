@@ -7,11 +7,11 @@ interface UserService {
 
     fun save(userRequestDomain: UserRequestDomain) : UserResponseDomain;
 
-    /*fun findAll(page: Int, size: Int) : List<UserResponseDomain>?;
+    fun findAll(page: Int, size: Int) : List<UserResponseDomain>?;
 
     fun findById(id: Long) : UserResponseDomain?;
 
     fun update(id: Long, userRequestDomain: UserRequestDomain) : UserResponseDomain?;
 
-    fun deleteById(id: Long);*/
+    fun deleteById(id: Long);
 }

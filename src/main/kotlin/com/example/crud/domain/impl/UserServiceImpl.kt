@@ -1,32 +1,33 @@
 package com.example.crud.domain.impl
 
-import com.example.crud.adapter.resource.UserResource
-import com.example.crud.adapter.resource.impl.UserResourceImplDb
+import com.example.crud.domain.UserRepository
 import com.example.crud.domain.UserService
 import com.example.crud.domain.entity.request.UserRequestDomain
 import com.example.crud.domain.entity.response.UserResponseDomain
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl(private val userResource: UserResource) : UserService {
+class UserServiceImpl(private val userResource: UserRepository) : UserService {
     override fun save(userRequestDomain: UserRequestDomain): UserResponseDomain {
 
         return userResource.save(userRequestDomain);
     }
 
-    /*override fun findAll(page: Int, size: Int): List<UserResponse>? {
+    override fun findAll(page: Int, size: Int): List<UserResponseDomain>? {
 
         val pageable = PageRequest.of(page, size)
-        val userPage: Page<UserEntity> = userRepository.findAll(pageable)
+        val userPage: Page<UserResponseDomain> = userResource.findAll(pageable)
 
         return if (userPage.hasContent()) {
-            userMapper.entitiesToDto(userPage.content)
+            userPage.content
         } else {
             null
         }
     }
 
-    override fun findById(id: Long): UserResponse? {
+    override fun findById(id: Long): UserResponseDomain? {
         val user = userRepository.findById(id);
 
         return if(!user.isEmpty) {
@@ -38,7 +39,7 @@ class UserServiceImpl(private val userResource: UserResource) : UserService {
 
     override fun update(
         id: Long,
-        userRequest: UserRequest
+        userRequest: UserRequestDomain
     ): UserResponse? {
 
         val user = userRepository.findById(id)
@@ -59,5 +60,5 @@ class UserServiceImpl(private val userResource: UserResource) : UserService {
 
     override fun deleteById(id: Long) {
         userRepository.deleteById(id)
-    }*/
+    }
 }

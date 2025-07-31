@@ -26,13 +26,13 @@ class UserWebMapper {
         );
     }
 
-    fun entitiesToDto(userEntities: List<UserEntity>) : List<UserResponse> {
-        return userEntities.map { user ->
+    fun entitiesToDto(userResponseDomain: List<UserResponseDomain>?) : List<UserResponse> {
+        return userResponseDomain?.map { user ->
             UserResponse(
                 id = user.id,
                 name = user.name,
                 email = user.email
-            );
-        }
+            )
+        } ?: emptyList()
     }
 }

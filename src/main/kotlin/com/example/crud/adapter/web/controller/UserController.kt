@@ -38,14 +38,16 @@ class UserController(
         }
     }
 
-    /*@GetMapping
+    @GetMapping
     fun findAll(@RequestParam(defaultValue = "0") page: Int,
                 @RequestParam(defaultValue = "10") size: Int): ResponseEntity<List<UserResponse>>?{
 
         val users = userService.findAll(page, size)
 
-        return if (users != null) {
-            ResponseEntity.ok(users)
+        val response = userMapper.entitiesToDto(users)
+
+        return if (response != null) {
+            ResponseEntity.ok(response)
         } else {
             ResponseEntity.noContent().build()
         }
@@ -78,5 +80,5 @@ class UserController(
     @DeleteMapping("/{id}")
     fun deleteById(@PathVariable("id") id: Long){
         userService.deleteById(id);
-    }*/
+    }
 }
