@@ -6,5 +6,5 @@ interface SqsUseCase {
 
     fun sendMessage(message: String)
 
-    fun receiveMessage(): List<Message>
+    fun receiveMessage(): List<String>
 }
