@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/sqs")
+@RequestMapping("/queue")
 class SqsController(
     private val sqsUseCase: SqsUseCase
 ) {
