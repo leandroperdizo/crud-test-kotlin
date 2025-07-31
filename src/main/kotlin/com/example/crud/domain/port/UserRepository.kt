@@ -16,5 +16,4 @@ interface UserRepository {
     fun update(id: Long, userRequestDomain: UserRequestDomain) : UserResponseDomain
 
     fun deleteById(id: Long)
-
 }

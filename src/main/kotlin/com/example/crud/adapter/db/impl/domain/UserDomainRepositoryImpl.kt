@@ -1,11 +1,11 @@
 package com.example.crud.adapter.db.impl.domain
 
 import com.example.crud.adapter.db.entity.UserEntity
-import com.example.crud.adapter.db.repository.UserDbAdapterRepository
 import com.example.crud.adapter.db.mapper.UserResourceMapper
-import com.example.crud.domain.port.UserRepository
+import com.example.crud.adapter.db.repository.UserDbAdapterRepository
 import com.example.crud.domain.model.request.UserRequestDomain
 import com.example.crud.domain.model.response.UserResponseDomain
+import com.example.crud.domain.port.UserRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest

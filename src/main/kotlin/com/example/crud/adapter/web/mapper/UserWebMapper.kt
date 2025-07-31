@@ -17,7 +17,8 @@ class UserWebMapper {
         );
     }
 
-    fun domainToDto(userResponseDomain: UserResponseDomain) : UserResponse{
+    fun domainToDto(userResponseDomain: UserResponseDomain?) : UserResponse{
+        requireNotNull(userResponseDomain) { "userResponseDomain não pode ser null" }
         return UserResponse(
             id = userResponseDomain.id,
             name = userResponseDomain.name,

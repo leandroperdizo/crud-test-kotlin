@@ -2,10 +2,11 @@ package com.example.crud.adapter.web.controller
 
 import com.example.crud.adapter.web.dto.request.UserRequest
 import com.example.crud.adapter.web.dto.response.UserResponse
+import com.example.crud.adapter.web.mapper.UserWebMapper
+import com.example.crud.domain.model.request.UserRequestDomain
+import com.example.crud.domain.model.response.UserResponseDomain
 import com.example.crud.domain.usecase.SqsUseCase
 import com.example.crud.domain.usecase.UserUseCase
-import com.example.crud.domain.model.response.UserResponseDomain
-import com.example.crud.adapter.web.mapper.UserWebMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.net.URI
@@ -15,50 +16,42 @@ import java.net.URI
 class UserController(
     private val userUseCase: UserUseCase,
     private val sqsUseCase: SqsUseCase,
-    private val userMapper: UserWebMapper
+    private val userWebMapper: UserWebMapper
 ) {
 
     @PostMapping
-    fun save(@RequestBody userRequest: UserRequest): ResponseEntity<UserResponse>{
+    fun save(@RequestBody userRequest: UserRequest): ResponseEntity<UserResponse> {
+        val userRequestDomain: UserRequestDomain = userWebMapper.dtoToDomain(userRequest)
+        val userResponseDomain: UserResponseDomain = userUseCase.save(userRequestDomain)
+        val userResponse: UserResponse = userWebMapper.domainToDto(userResponseDomain)
 
-        val userDomain = userMapper.dtoToDomain(userRequest)
+        sqsUseCase.sendMessage(userResponse.toString())
 
-        val user: UserResponseDomain = userUseCase.save(userDomain)
-
-        val response = userMapper.domainToDto(user)
-
-        return if (response != null) {
-
-            sqsUseCase.sendMessage(response.toString())
-
-            val location = URI.create("/user/${response.id}")
-            ResponseEntity.created(location).body(response)
-        } else {
-            ResponseEntity.noContent().build()
-        }
+        val location = URI.create("/user/${userResponse.id}")
+        return ResponseEntity.created(location).body(userResponse)
     }
 
     @GetMapping
-    fun findAll(@RequestParam(defaultValue = "0") page: Int,
-                @RequestParam(defaultValue = "10") size: Int): ResponseEntity<List<UserResponse>>?{
+    fun findAll(
+        @RequestParam(defaultValue = "0") page: Int,
+        @RequestParam(defaultValue = "10") size: Int
+    ): ResponseEntity<List<UserResponse>> {
+        val userResponseDomainList = userUseCase.findAll(page, size)
+        val userResponseList = userWebMapper.entitiesToDto(userResponseDomainList)
 
-        val users = userUseCase.findAll(page, size)
-
-        val response = userMapper.entitiesToDto(users)
-
-        return if (response != null) {
-            ResponseEntity.ok(response)
+        return if (userResponseList.isNotEmpty()) {
+            ResponseEntity.ok(userResponseList)
         } else {
             ResponseEntity.noContent().build()
         }
     }
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable("id") id: Long): ResponseEntity<UserResponse>?{
+    fun findById(@PathVariable("id") id: Long): ResponseEntity<UserResponse> {
+        val userResponseDomain = userUseCase.findById(id)
 
-        val userResponse = userUseCase.findById(id)
-
-        return if (userResponse != null) {
+        return if (userResponseDomain != null) {
+            val userResponse = userWebMapper.domainToDto(userResponseDomain)
             ResponseEntity.ok(userResponse)
         } else {
             ResponseEntity.notFound().build()
@@ -66,19 +59,23 @@ class UserController(
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable("id") id: Long, @RequestBody userRequest: UserRequest): ResponseEntity<UserResponse>?{
+    fun update(
+        @PathVariable("id") id: Long,
+        @RequestBody userRequest: UserRequest
+    ): ResponseEntity<UserResponse> {
+        val userRequestDomain = userWebMapper.dtoToDomain(userRequest)
+        val updatedUserResponseDomain = userUseCase.update(id, userRequestDomain)
 
-        val updatedUser = userUseCase.update(id, userRequest)
-
-        return if (updatedUser != null) {
-            ResponseEntity.ok(updatedUser)
+        return if (updatedUserResponseDomain != null) {
+            val userResponse = userWebMapper.domainToDto(updatedUserResponseDomain)
+            ResponseEntity.ok(userResponse)
         } else {
             ResponseEntity.notFound().build()
         }
     }
 
     @DeleteMapping("/{id}")
-    fun deleteById(@PathVariable("id") id: Long){
-        userUseCase.deleteById(id);
+    fun deleteById(@PathVariable("id") id: Long) {
+        userUseCase.deleteById(id)
     }
 }
