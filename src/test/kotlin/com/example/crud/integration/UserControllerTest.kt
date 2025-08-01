@@ -64,14 +64,5 @@ class UserControllerRestAssuredTest {
             val sqsUseCase: SqsUseCase = mock(SqsUseCase::class.java)
             val userWebMapper: UserWebMapper = mock(UserWebMapper::class.java)
         }
-
-        @Bean
-        fun userUseCase(): UserUseCase = userUseCase
-
-        @Bean
-        fun sqsUseCase(): SqsUseCase = sqsUseCase
-
-        @Bean
-        fun userWebMapper(): UserWebMapper = userWebMapper
     }
 }
