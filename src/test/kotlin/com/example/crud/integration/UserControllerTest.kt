@@ -1,57 +1,77 @@
 package com.example.crud.integration
 
-import com.example.crud.adapter.web.controller.UserController
 import com.example.crud.adapter.web.dto.request.UserRequest
+import com.example.crud.adapter.web.dto.response.UserResponse
 import com.example.crud.adapter.web.mapper.UserWebMapper
 import com.example.crud.domain.model.request.UserRequestDomain
 import com.example.crud.domain.model.response.UserResponseDomain
 import com.example.crud.domain.usecase.SqsUseCase
 import com.example.crud.domain.usecase.UserUseCase
-import io.restassured.RestAssured.given
-import io.restassured.module.mockmvc.RestAssuredMockMvc
-import org.hamcrest.core.IsEqual.equalTo
+import io.restassured.RestAssured
+import io.restassured.http.ContentType
+import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
-import org.springframework.http.MediaType
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.boot.test.web.server.LocalServerPort
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Import
 
-class UserControllerTest {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Import(UserControllerRestAssuredTest.TestMockConfig::class)
+class UserControllerRestAssuredTest {
 
-    private val userUseCase = mock(UserUseCase::class.java)
-    private val sqsUseCase = mock(SqsUseCase::class.java)
-    private val userWebMapper = mock(UserWebMapper::class.java)
-
-    private lateinit var controller: UserController
+    @LocalServerPort
+    var port: Int = 0
 
     @BeforeEach
     fun setup() {
-        controller = UserController(userUseCase, sqsUseCase, userWebMapper)
-        RestAssuredMockMvc.standaloneSetup(controller)
+        RestAssured.port = port
     }
 
     @Test
-    fun `deve criar um novo usuário com sucesso`() {
-        val userRequest = UserRequest(1L, "João", "joao@email.com")
-        val userRequestDomain = UserRequestDomain(1L, "João", "joao@email.com")
-        val userResponseDomain = UserResponseDomain(1L, "João", "joao@email.com")
-        val userResponse = com.example.crud.adapter.web.dto.response.UserResponse(1L, "João", "joao@email.com")
+    fun `should return 201 on user creation`() {
+        val userRequest = UserRequest(1L, "Teste", "teste@teste.com")
+        val userRequestDomain = UserRequestDomain(1L, "Teste", "teste@teste.com")
+        val userResponseDomain = UserResponseDomain(1L, "Teste", "teste@teste.com")
+        val userResponse = UserResponse(1L, "Teste", "teste@teste.com")
 
-        // Mocks
-        `when`(userWebMapper.dtoToDomain(userRequest)).thenReturn(userRequestDomain)
-        `when`(userUseCase.save(userRequestDomain)).thenReturn(userResponseDomain)
-        `when`(userWebMapper.domainToDto(userResponseDomain)).thenReturn(userResponse)
+        `when`(TestMockConfig.userWebMapper.dtoToDomain(userRequest)).thenReturn(userRequestDomain)
+        `when`(TestMockConfig.userUseCase.save(userRequestDomain)).thenReturn(userResponseDomain)
+        `when`(TestMockConfig.userWebMapper.domainToDto(userResponseDomain)).thenReturn(userResponse)
 
-        given()
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
+        RestAssured.given()
+            .contentType(ContentType.JSON)
             .body(userRequest)
-            .`when`()
             .post("/user")
             .then()
             .statusCode(201)
             .header("Location", "/user/1")
             .body("id", equalTo(1))
-            .body("name", equalTo("João"))
-            .body("email", equalTo("joao@email.com"))
+            .body("firstName", equalTo("Teste"))
+            .body("lastName", equalTo("Teste"))
+            .body("email", equalTo("teste@teste.com"))
+    }
+
+    @TestConfiguration
+    class TestMockConfig {
+
+        companion object {
+            val userUseCase: UserUseCase = mock(UserUseCase::class.java)
+            val sqsUseCase: SqsUseCase = mock(SqsUseCase::class.java)
+            val userWebMapper: UserWebMapper = mock(UserWebMapper::class.java)
+        }
+
+        @Bean
+        fun userUseCase(): UserUseCase = userUseCase
+
+        @Bean
+        fun sqsUseCase(): SqsUseCase = sqsUseCase
+
+        @Bean
+        fun userWebMapper(): UserWebMapper = userWebMapper
     }
 }

@@ -1,3 +1,5 @@
+package com.example.crud.integration
+
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -14,7 +16,7 @@ class SimpleWireMockTest {
             .willReturn(aResponse()
                 .withStatus(200)
                 .withHeader("Content-Type", "text/plain")
-                .withBody("Hello WireMock")))
+                .withBody("Teste Wiremock")))
 
         val url = URL("http://localhost:8080/test")
         val conn = url.openConnection() as HttpURLConnection
@@ -23,7 +25,7 @@ class SimpleWireMockTest {
 
         assertEquals(200, conn.responseCode)
         val body = conn.inputStream.bufferedReader().readText()
-        assertEquals("Hello WireMock", body)
+        assertEquals("Teste Wiremock", body)
 
         verify(getRequestedFor(urlEqualTo("/test")))
     }
