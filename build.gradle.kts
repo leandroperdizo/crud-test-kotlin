@@ -33,6 +33,20 @@ dependencies {
 	testImplementation("org.mockito:mockito-core:3.11.2")
 	testImplementation("org.mockito:mockito-inline:3.11.2")
 	implementation("org.springframework.kafka:spring-kafka:4.0.0-M3")
+	testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
+	testImplementation("org.eclipse.jetty:jetty-util:11.0.15")
+	testImplementation("org.junit.jupiter:junit-jupiter")
+	testImplementation("org.mockito:mockito-core")
+	testImplementation("org.junit.jupiter:junit-jupiter")
+	testImplementation("javax.servlet:javax.servlet-api:4.0.1")
+	implementation("log4j:log4j:1.2.16")
+	testImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+	}
+
+	testImplementation("io.rest-assured:rest-assured:5.3.0")
+	testImplementation("io.rest-assured:spring-mock-mvc:5.3.0")
+	testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 kotlin {
